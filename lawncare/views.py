@@ -64,14 +64,14 @@ Message: {booking.message if booking.message else "No message"}
 """
 
         # ✅ FIXED EMAIL BLOCK (INDENTATION CORRECT)
-        email_status = "sent"
+        email_status = "skipped"
         try:
             send_mail(
                 subject,
                 email_body,
                 settings.EMAIL_HOST_USER,
                 [settings.EMAIL_HOST_USER],
-                fail_silently=False,
+                fail_silently=True,
             )
             print("✅ EMAIL SENT SUCCESSFULLY")
 
