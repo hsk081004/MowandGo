@@ -1205,163 +1205,173 @@
 		</footer>
 
 		<script>
-			// Set dynamic year in footer
-			document.getElementById('year').textContent = new Date().getFullYear();
+						// Set dynamic year in footer
+						document.getElementById('year').textContent = new Date().getFullYear();
 
-			// Navbar Scroll Effect
-			const navbar = document.getElementById('navbar');
-			window.addEventListener('scroll', () => {
-				if (window.scrollY > 20) {
-					navbar.classList.add('shadow-md');
-					navbar.classList.remove('py-2');
-				} else {
-					navbar.classList.remove('shadow-md');
-					navbar.classList.add('py-2');
-				}
-			});
+						// Navbar Scroll Effect
+						const navbar = document.getElementById('navbar');
+						window.addEventListener('scroll', () => {
+							if (window.scrollY > 20) {
+								navbar.classList.add('shadow-md');
+								navbar.classList.remove('py-2');
+							} else {
+								navbar.classList.remove('shadow-md');
+								navbar.classList.add('py-2');
+							}
+						});
 
-			// Mobile Menu Toggle
-			const btn = document.getElementById('mobile-menu-btn');
-			const menu = document.getElementById('mobile-menu');
-			const icon = btn.querySelector('i');
+						// Mobile Menu Toggle
+						const btn = document.getElementById('mobile-menu-btn');
+						const menu = document.getElementById('mobile-menu');
+						const icon = btn.querySelector('i');
 
-			btn.addEventListener('click', () => {
-				menu.classList.toggle('hidden');
-				if (menu.classList.contains('hidden')) {
-					icon.classList.remove('fa-xmark');
-					icon.classList.add('fa-bars');
-				} else {
-					icon.classList.remove('fa-bars');
-					icon.classList.add('fa-xmark');
-				}
-			});
+						btn.addEventListener('click', () => {
+							menu.classList.toggle('hidden');
+							if (menu.classList.contains('hidden')) {
+								icon.classList.remove('fa-xmark');
+								icon.classList.add('fa-bars');
+							} else {
+								icon.classList.remove('fa-bars');
+								icon.classList.add('fa-xmark');
+							}
+						});
 
-			// Close mobile menu when a link is clicked
-			const mobileLinks = menu.querySelectorAll('a');
-			mobileLinks.forEach((link) => {
-				link.addEventListener('click', () => {
-					menu.classList.add('hidden');
-					icon.classList.remove('fa-xmark');
-					icon.classList.add('fa-bars');
-				});
-			});
-
-			// --- DJANGO CSRF TOKEN HELPER ---
-			function getCookie(name) {
-				let cookieValue = null;
-				if (document.cookie && document.cookie !== '') {
-					const cookies = document.cookie.split(';');
-					for (let i = 0; i < cookies.length; i++) {
-						const cookie = cookies[i].trim();
-						if (cookie.substring(0, name.length + 1) === name + '=') {
-							cookieValue = decodeURIComponent(
-								cookie.substring(name.length + 1),
-							);
-							break;
-						}
-					}
-				}
-				return cookieValue;
-			}
-
-			// --- FORM SUBMISSION ---
-			const bookingForm = document.getElementById('booking-form');
-			const formError = document.getElementById('form-error');
-			const formSuccess = document.getElementById('form-success');
-
-			bookingForm.addEventListener('submit', function (e) {
-				e.preventDefault();
-
-				const name = document.getElementById('name').value.trim();
-				const phone = document.getElementById('phone').value.trim();
-				const email = document.getElementById('email').value.trim();
-				const address = document.getElementById('address').value.trim();
-				const date = document.getElementById('date').value;
-				const service = document.getElementById('service').value;
-				const message = document.getElementById('message').value;
-
-				if (!name || !phone || !address || !date || !service) {
-					formError.textContent = 'Please fill in all required fields.';
-					formError.classList.remove('hidden');
-					return;
-				}
-
-				formError.classList.add('hidden');
-
-				const submitBtn = bookingForm.querySelector('button[type="submit"]');
-				const originalBtnText = submitBtn.innerHTML;
-				submitBtn.innerHTML =
-					'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending Request...';
-				submitBtn.disabled = true;
-
-				// Send data to Django Backend
-				fetch(window.location.origin + '/', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'X-CSRFToken': getCookie('csrftoken'),
-					},
-					body: JSON.stringify({
-						Name: name,
-						Phone: phone,
-						Email: email,
-						Address: address,
-						Date: date,
-						Service: service,
-						Message: message,
-					}),
-				})
-					.then(async (response) => {
-						const data = await response.json();
-						if (!response.ok) {
-							throw new Error(data.message || 'Server error');
-						}
-						return data;
-					})
-					.then((data) => {
-						if (data.status === 'success') {
-							bookingForm.classList.add('hidden');
-							formSuccess.classList.remove('hidden');
-							formSuccess.scrollIntoView({
-								behavior: 'smooth',
-								block: 'center',
+						// Close mobile menu when a link is clicked
+						const mobileLinks = menu.querySelectorAll('a');
+						mobileLinks.forEach((link) => {
+							link.addEventListener('click', () => {
+								menu.classList.add('hidden');
+								icon.classList.remove('fa-xmark');
+								icon.classList.add('fa-bars');
 							});
+						});
+
+						// --- DJANGO CSRF TOKEN HELPER ---
+						function getCookie(name) {
+							let cookieValue = null;
+							if (document.cookie && document.cookie !== '') {
+								const cookies = document.cookie.split(';');
+								for (let i = 0; i < cookies.length; i++) {
+									const cookie = cookies[i].trim();
+									if (cookie.substring(0, name.length + 1) === name + '=') {
+										cookieValue = decodeURIComponent(
+											cookie.substring(name.length + 1),
+										);
+										break;
+									}
+								}
+							}
+							return cookieValue;
 						}
-					})
-					.catch((error) => {
-						console.error('Submission Error:', error);
-						formError.textContent = 'Error: ' + error.message;
-						formError.classList.remove('hidden');
-					})
-					.finally(() => {
-						submitBtn.innerHTML = originalBtnText;
-						submitBtn.disabled = false;
-					});
-			});
 
-			// --- ABOUT SECTION IMAGE SLIDER ---
-			const sliderImages = document.querySelectorAll('.slider-img');
-			let currentImgIndex = 0;
+						// --- FORM SUBMISSION ---
+						const bookingForm = document.getElementById('booking-form');
+						const formError = document.getElementById('form-error');
+						const formSuccess = document.getElementById('form-success');
 
-			if (sliderImages.length > 0) {
-				setInterval(() => {
-					sliderImages[currentImgIndex].classList.replace(
-						'opacity-100',
-						'opacity-0',
-					);
-					currentImgIndex = (currentImgIndex + 1) % sliderImages.length;
-					sliderImages[currentImgIndex].classList.replace(
-						'opacity-0',
-						'opacity-100',
-					);
-				}, 4000);
-			}
+						bookingForm.addEventListener('submit', function (e) {
+							e.preventDefault();
 
-			function resetForm() {
-				bookingForm.reset();
-				formSuccess.classList.add('hidden');
-				bookingForm.classList.remove('hidden');
-			}
+							const name = document.getElementById('name').value.trim();
+							const phone = document.getElementById('phone').value.trim();
+							const email = document.getElementById('email').value.trim();
+							const address = document.getElementById('address').value.trim();
+							const date = document.getElementById('date').value;
+							const service = document.getElementById('service').value;
+							const message = document.getElementById('message').value;
+
+							if (!name || !phone || !address || !date || !service) {
+								formError.textContent = 'Please fill in all required fields.';
+								formError.classList.remove('hidden');
+								return;
+							}
+
+							formError.classList.add('hidden');
+
+							const submitBtn = bookingForm.querySelector('button[type="submit"]');
+							const originalBtnText = submitBtn.innerHTML;
+							submitBtn.innerHTML =
+								'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending Request...';
+							submitBtn.disabled = true;
+
+							// Send data to Django Backend
+							fetch(window.location.origin + '/api/booking/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': getCookie('csrftoken'),
+				},
+				body: JSON.stringify({
+					Name: name,
+					Phone: phone,
+					Email: email,
+					Address: address,
+					Date: date,
+					Service: service,
+					Message: message,
+				}),
+			})
+				.then(async (response) => {
+					let data;
+
+					try {
+						data = await response.json();
+					} catch (e) {
+						const text = await response.text();
+						console.error("Non-JSON response:", text);
+						throw new Error("Server returned invalid response (not JSON)");
+					}
+
+					if (!response.ok) {
+						throw new Error(data.message || 'Server error');
+					}
+
+					return data;
+				})
+				.then((data) => {
+					if (data.status === 'success') {
+						bookingForm.classList.add('hidden');
+						formSuccess.classList.remove('hidden');
+						formSuccess.scrollIntoView({
+							behavior: 'smooth',
+							block: 'center',
+						});
+					} else {
+						throw new Error(data.message || 'Something went wrong');
+					}
+				})
+				.catch((error) => {
+					console.error('Submission Error:', error);
+					formError.textContent = 'Error: ' + error.message;
+					formError.classList.remove('hidden');
+				})
+				.finally(() => {
+					submitBtn.innerHTML = originalBtnText;
+					submitBtn.disabled = false;
+				});
+						// --- ABOUT SECTION IMAGE SLIDER ---
+						const sliderImages = document.querySelectorAll('.slider-img');
+						let currentImgIndex = 0;
+
+						if (sliderImages.length > 0) {
+							setInterval(() => {
+								sliderImages[currentImgIndex].classList.replace(
+									'opacity-100',
+									'opacity-0',
+								);
+								currentImgIndex = (currentImgIndex + 1) % sliderImages.length;
+								sliderImages[currentImgIndex].classList.replace(
+									'opacity-0',
+									'opacity-100',
+								);
+							}, 4000);
+						}
+
+						function resetForm() {
+							bookingForm.reset();
+							formSuccess.classList.add('hidden');
+							bookingForm.classList.remove('hidden');
+						}
 		</script>
 	</body>
 </html>
