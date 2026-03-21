@@ -1295,10 +1295,12 @@
 				submitBtn.disabled = true;
 
 				// Send data to Django Backend (using relative path '/')
+				// Send data to Django Backend
 				fetch('/', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
+						// This line is the most important!
 						'X-CSRFToken': getCookie('csrftoken'),
 					},
 					body: JSON.stringify({
