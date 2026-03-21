@@ -1,11 +1,10 @@
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Booking
-from django.shortcuts import render, redirect, get_object_or_404
 
 def home_view(request):
     if request.method == 'POST':
@@ -46,10 +45,11 @@ def home_view(request):
             
             -----------------------------------------
             Manage this request in your admin dashboard: 
-            http://127.0.0.1:8000/dashboard/
+            https://mowandgo-4hxy.onrender.com/dashboard/
             =========================================
             """
-            # Try to send the email, but don't break the booking if it fails
+            
+            # Try to send the email
             try:
                 send_mail(
                     subject,
@@ -59,15 +59,22 @@ def home_view(request):
                     fail_silently=False,
                 )
                 email_status = "and email sent."
+                
             except Exception as email_error:
-                print(f"\n--- SMTP EMAIL ERROR ---")
+                # THIS WILL PRINT THE EXACT REASON GOOGLE IS REJECTING IT
+                print(f"\n--- CRITICAL EMAIL ERROR ---")
                 print(f"{email_error}")
-                print(f"------------------------\n")
-                email_status = "but email failed (check terminal for error)."
+                print(f"----------------------------\n")
+                
+                # Tell the frontend to show the error
+                return JsonResponse({'status': 'error', 'message': 'Email failed to send. Check logs.'}, status=400)
 
             return JsonResponse({'status': 'success', 'message': f'Booking saved {email_status}'})
 
         except Exception as e:
+            print(f"\n--- CRITICAL GENERAL ERROR ---")
+            print(f"{e}")
+            print(f"------------------------------\n")
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     # For GET requests, render the page
