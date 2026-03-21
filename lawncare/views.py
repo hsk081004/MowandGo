@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST  # ✅ MISSING IMPORT FIXED
 from .models import Booking
 
 
@@ -47,7 +48,7 @@ def booking_api(request):
             message=data.get('Message')
         )
 
-        # ✅ Email Content (SAFE)
+        # ✅ Email Content
         subject = f"Mow & Go | New Booking from {booking.name}"
         email_body = f"""
 New Booking
@@ -59,25 +60,26 @@ Address: {booking.address}
 Service: {booking.service}
 Date: {booking.preferred_date}
 
-Message: {booking.message}
+Message: {booking.message if booking.message else "No message"}
 """
 
-        # ✅ SAFE EMAIL BLOCK (VERY IMPORTANT)
+        # ✅ FIXED EMAIL BLOCK (INDENTATION CORRECT)
         email_status = "sent"
         try:
-    send_mail(
-        subject,
-        email_body,
-        settings.EMAIL_HOST_USER,
-        [settings.EMAIL_HOST_USER],
-        fail_silently=False,   # 👈 TEMPORARY (to see error)
-    )
-    print("✅ EMAIL SENT SUCCESSFULLY")
+            send_mail(
+                subject,
+                email_body,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            print("✅ EMAIL SENT SUCCESSFULLY")
 
-except Exception as email_error:
-    print("❌ EMAIL ERROR:", email_error)
+        except Exception as email_error:
+            print("❌ EMAIL ERROR:", email_error)
+            email_status = "failed"
 
-        # ✅ ALWAYS RETURN JSON (NO HTML EVER)
+        # ✅ ALWAYS RETURN JSON
         return JsonResponse({
             'status': 'success',
             'message': 'Booking saved successfully',
@@ -89,10 +91,8 @@ except Exception as email_error:
 
         return JsonResponse({
             'status': 'error',
-            'message': str(e)   # show real error for debugging
+            'message': str(e)
         }, status=500)
-
-    return JsonResponse({'message': 'Invalid request'}, status=405)
 
 
 # --- CUSTOM ADMIN DASHBOARD ---
