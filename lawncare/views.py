@@ -48,30 +48,22 @@ def booking_api(request):
             message=data.get('Message')
         )
 
-        # ✅ Email Content
+        # ✅ Email Content (SAFE)
         subject = f"Mow & Go | New Booking from {booking.name}"
         email_body = f"""
-=========================================
-🌿 MOW & GO - NEW BOOKING REQUEST 🌿
-=========================================
+New Booking
 
 Name: {booking.name}
 Phone: {booking.phone}
 Email: {booking.email}
 Address: {booking.address}
-Service: {booking.get_service_display()}
+Service: {booking.service}
 Date: {booking.preferred_date}
 
-Message:
-{booking.message if booking.message else "No message provided."}
-
-Dashboard:
-https://mowandgo.onrender.com/dashboard/
-
-=========================================
+Message: {booking.message}
 """
 
-        # ✅ Try sending email (non-blocking logic)
+        # ✅ SAFE EMAIL BLOCK (VERY IMPORTANT)
         email_status = "sent"
         try:
             send_mail(
@@ -79,13 +71,13 @@ https://mowandgo.onrender.com/dashboard/
                 email_body,
                 settings.EMAIL_HOST_USER,
                 [settings.EMAIL_HOST_USER],
-                fail_silently=False,
+                fail_silently=True,   # 🔥 FIX HERE
             )
         except Exception as email_error:
             print("EMAIL ERROR:", email_error)
             email_status = "failed"
 
-        # ✅ ALWAYS return clean JSON
+        # ✅ ALWAYS RETURN JSON (NO HTML EVER)
         return JsonResponse({
             'status': 'success',
             'message': 'Booking saved successfully',
@@ -93,10 +85,11 @@ https://mowandgo.onrender.com/dashboard/
         })
 
     except Exception as e:
-        print("GENERAL ERROR:", e)
+        print("FULL ERROR:", e)
+
         return JsonResponse({
             'status': 'error',
-            'message': 'Something went wrong on server'
+            'message': str(e)   # show real error for debugging
         }, status=500)
 
 
