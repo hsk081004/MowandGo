@@ -1,0 +1,20 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment (adjust the name if yours isn't called 'venv')
+venv/
+env/
+
+# Database (Never upload your live database to GitHub!)
+db.sqlite3
+
+# Environment variables / Secrets
+.env
+
+# Media files (user uploads)
+media/
+
+# Static files (CSS, JS, Images)
+static/

@@ -1,0 +1,1365 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>GreenScape | Professional Lawn Care & Gardening</title>
+
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						fontFamily: {
+							sans: ['Inter', 'sans-serif'],
+						},
+						colors: {
+							brand: {
+								50: '#f0fdf4',
+								100: '#dcfce7',
+								500: '#22c55e',
+								600: '#16a34a',
+								700: '#15803d',
+								900: '#14532d',
+							},
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			html {
+				scroll-behavior: smooth;
+			}
+			body {
+				/* Prevents horizontal scroll on small devices due to absolute positioning */
+				overflow-x: hidden;
+			}
+
+			/* Replace 'INSERT_YOUR_BACKGROUND_IMAGE_HERE.jpg' with your actual image file path */
+			.hero-bg {
+				background-color: #14532d; /* Fallback color */
+				background-image:
+					linear-gradient(rgba(20, 83, 45, 0.7), rgba(20, 83, 45, 0.6)),
+					url('https://images.unsplash.com/photo-1558904541-efa843a96f09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+				background-size: cover;
+				background-position: center;
+				background-attachment: fixed;
+			}
+
+			.service-card:hover .service-icon {
+				transform: scale(1.1) rotate(5deg);
+			}
+
+			/* Custom scrollbar */
+			::-webkit-scrollbar {
+				width: 8px;
+			}
+			::-webkit-scrollbar-track {
+				background: #f1f1f1;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #16a34a;
+				border-radius: 4px;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: #15803d;
+			}
+		</style>
+	</head>
+	<body class="font-sans text-gray-800 antialiased bg-gray-50">
+		<nav
+			class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 transition-all duration-300 py-2"
+			id="navbar"
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-center h-16 md:h-20">
+					<div
+						class="flex-shrink-0 flex items-center cursor-pointer"
+						onclick="window.scrollTo(0, 0)"
+					>
+						<i
+							class="fa-solid fa-leaf text-brand-600 text-2xl md:text-3xl mr-2"
+						></i>
+						<span
+							class="font-bold text-xl md:text-2xl tracking-tight text-gray-900"
+							>Mow<span class="text-brand-600"> & </span>Go</span
+						>
+					</div>
+
+					<div class="hidden lg:flex items-center space-x-8">
+						<a
+							href="#home"
+							class="text-gray-600 hover:text-brand-600 font-medium transition"
+							>Home</a
+						>
+						<a
+							href="#services"
+							class="text-gray-600 hover:text-brand-600 font-medium transition"
+							>Services</a
+						>
+						<a
+							href="#about"
+							class="text-gray-600 hover:text-brand-600 font-medium transition"
+							>About</a
+						>
+						<a
+							href="#contact"
+							class="text-gray-600 hover:text-brand-600 font-medium transition"
+							>Contact</a
+						>
+						<a
+							href="#booking"
+							class="bg-brand-600 text-white px-6 py-2.5 rounded-full font-medium hover:bg-brand-700 hover:shadow-lg transition transform hover:-translate-y-0.5"
+						>
+							Book Now
+						</a>
+					</div>
+
+					<div class="lg:hidden flex items-center">
+						<button
+							id="mobile-menu-btn"
+							class="text-gray-600 hover:text-brand-600 focus:outline-none text-2xl p-2"
+						>
+							<i class="fa-solid fa-bars"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div
+				id="mobile-menu"
+				class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg transition-all duration-300"
+			>
+				<div class="px-4 pt-2 pb-6 space-y-2">
+					<a
+						href="#home"
+						class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md"
+						>Home</a
+					>
+					<a
+						href="#services"
+						class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md"
+						>Services</a
+					>
+					<a
+						href="#about"
+						class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md"
+						>About</a
+					>
+					<a
+						href="#contact"
+						class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md"
+						>Contact</a
+					>
+					<a
+						href="#booking"
+						class="block px-3 py-3 text-base font-medium text-white bg-brand-600 hover:bg-brand-700 rounded-md text-center mt-4"
+						>Book Now</a
+					>
+				</div>
+			</div>
+		</nav>
+
+		<section
+			id="home"
+			class="hero-bg min-h-screen flex items-center relative pt-24 pb-12 sm:pt-32 sm:pb-16 lg:pt-20 lg:pb-20"
+		>
+			<div
+				class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center md:text-left"
+			>
+				<div class="max-w-3xl mx-auto md:mx-0">
+					<span
+						class="inline-block py-1.5 px-4 rounded-full bg-brand-500/20 text-brand-100 font-semibold tracking-wider text-xs sm:text-sm mb-6 border border-brand-500/30 backdrop-blur-sm"
+					>
+						🌿 YOUR TRUSTED GARDENING EXPERTS
+					</span>
+					<h1
+						class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-lg"
+					>
+						Professional Lawn Care &
+						<span class="text-brand-500 block sm:inline">Gardening</span>
+						Services
+					</h1>
+					<p
+						class="text-lg sm:text-xl text-gray-200 mb-8 sm:mb-10 max-w-2xl mx-auto md:mx-0 drop-shadow-md leading-relaxed px-2 sm:px-0"
+					>
+						We make your outdoor space beautiful. Experience premium lawn
+						maintenance, landscaping, and garden care tailored to your home's
+						unique needs.
+					</p>
+					<div
+						class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start px-4 sm:px-0"
+					>
+						<a
+							href="#contact"
+							class="w-full sm:w-auto px-8 py-4 bg-white text-brand-700 font-bold rounded-full hover:bg-gray-50 hover:shadow-xl transition transform hover:-translate-y-1 text-base sm:text-lg text-center"
+						>
+							Get Free Quote
+						</a>
+						<a
+							href="#booking"
+							class="w-full sm:w-auto px-8 py-4 bg-brand-600 text-white font-bold rounded-full hover:bg-brand-500 hover:shadow-xl transition transform hover:-translate-y-1 text-base sm:text-lg text-center border-2 border-brand-600"
+						>
+							Book Service
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div
+				class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0"
+			>
+				<svg
+					class="relative block w-full h-[40px] sm:h-[60px] md:h-[100px]"
+					data-name="Layer 1"
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 1200 120"
+					preserveAspectRatio="none"
+				>
+					<path
+						d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.32,192.86,110.53Z"
+						fill="#f9fafb"
+					></path>
+				</svg>
+			</div>
+		</section>
+
+		<section id="services" class="py-16 lg:py-24 bg-gray-50">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+					<h2
+						class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2"
+					>
+						What We Do
+					</h2>
+					<h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+						Our Premium Services
+					</h3>
+					<div class="w-24 h-1 bg-brand-600 mx-auto rounded-full mb-6"></div>
+					<p class="text-gray-600 text-base sm:text-lg px-4 sm:px-0">
+						Comprehensive care for your lawn and garden to keep your property
+						looking its absolute best year-round.
+					</p>
+				</div>
+
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+				>
+					<div
+						class="service-card bg-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.2)] transition-all duration-300 border border-gray-100 group cursor-pointer"
+					>
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6 text-brand-600 text-2xl sm:text-3xl group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300"
+						>
+							<i
+								class="fa-solid fa-tractor service-icon transition-transform duration-300"
+							></i>
+						</div>
+						<h4 class="text-xl font-bold text-gray-900 mb-3">Lawn Mowing</h4>
+						<p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+							Precision mowing, edging, and trimming to give your lawn a
+							pristine, manicured appearance every time.
+						</p>
+					</div>
+
+					<div
+						class="service-card bg-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.2)] transition-all duration-300 border border-gray-100 group cursor-pointer"
+					>
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6 text-brand-600 text-2xl sm:text-3xl group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300"
+						>
+							<i
+								class="fa-solid fa-seedling service-icon transition-transform duration-300"
+							></i>
+						</div>
+						<h4 class="text-xl font-bold text-gray-900 mb-3">
+							Garden Maintenance
+						</h4>
+						<p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+							Seasonal planting, mulching, soil aeration, and comprehensive care
+							to help your flowers and plants thrive.
+						</p>
+					</div>
+
+					<div
+						class="service-card bg-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.2)] transition-all duration-300 border border-gray-100 group cursor-pointer"
+					>
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6 text-brand-600 text-2xl sm:text-3xl group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300"
+						>
+							<i
+								class="fa-solid fa-scissors service-icon transition-transform duration-300"
+							></i>
+						</div>
+						<h4 class="text-xl font-bold text-gray-900 mb-3">Hedge Trimming</h4>
+						<p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+							Expert shaping and pruning of bushes, hedges, and small trees to
+							promote healthy growth and beautiful aesthetics.
+						</p>
+					</div>
+
+					<div
+						class="service-card bg-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.2)] transition-all duration-300 border border-gray-100 group cursor-pointer"
+					>
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6 text-brand-600 text-2xl sm:text-3xl group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300"
+						>
+							<i
+								class="fa-solid fa-bug service-icon transition-transform duration-300"
+							></i>
+						</div>
+						<h4 class="text-xl font-bold text-gray-900 mb-3">Weed Control</h4>
+						<p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+							Safe and effective removal and prevention of weeds in your lawn
+							and flower beds to protect your healthy plants.
+						</p>
+					</div>
+
+					<div
+						class="service-card bg-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.2)] transition-all duration-300 border border-gray-100 group cursor-pointer"
+					>
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-6 text-brand-600 text-2xl sm:text-3xl group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300"
+						>
+							<i
+								class="fa-solid fa-trash-can service-icon transition-transform duration-300"
+							></i>
+						</div>
+						<h4 class="text-xl font-bold text-gray-900 mb-3">Waste Removal</h4>
+						<p class="text-gray-600 leading-relaxed text-sm sm:text-base">
+							Complete cleanup and environmentally friendly disposal of leaves,
+							branches, and other organic yard debris.
+						</p>
+					</div>
+
+					<div
+						class="bg-brand-600 rounded-2xl p-6 sm:p-8 flex flex-col justify-center items-center text-center shadow-lg text-white"
+					>
+						<h4 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+							Need Custom Care?
+						</h4>
+						<p class="mb-6 opacity-90 text-sm sm:text-base">
+							We offer specialized landscaping solutions tailored to your unique
+							property.
+						</p>
+						<a
+							href="#contact"
+							class="bg-white text-brand-600 px-6 py-3 rounded-full font-bold hover:bg-brand-50 transition transform hover:-translate-y-1 shadow-md w-full"
+						>
+							Contact Us Today
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="about" class="py-16 lg:py-24 bg-white overflow-hidden">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+					<div class="w-full lg:w-1/2 relative px-4 sm:px-0">
+						<div
+							class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-200 aspect-w-4 aspect-h-3 sm:aspect-w-16 sm:aspect-h-12 min-h-[300px] sm:min-h-[400px]"
+						>
+							<div
+								class="relative w-full h-full min-h-[300px] sm:min-h-[400px] group"
+								id="about-slider"
+							>
+								<img
+									src="{% static 'images/image1.jpeg' %}"
+									alt="Professional Gardener"
+									class="slider-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 opacity-100"
+								/>
+
+								<img
+									src="{% static 'images/image2.jpg' %}"
+									alt="Lawn Mowing Service"
+									class="slider-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 opacity-0"
+								/>
+
+								<img
+									src="{% static 'images/image3.jpg' %}"
+									alt="Beautiful Landscaping"
+									class="slider-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 opacity-0"
+								/>
+							</div>
+						</div>
+						<div
+							class="absolute -bottom-6 right-0 sm:-right-6 lg:bottom-10 lg:-right-10 bg-white p-4 sm:p-6 rounded-2xl shadow-xl flex items-center gap-3 sm:gap-4 border border-gray-100 z-10 w-[85%] sm:w-auto max-w-xs"
+						>
+							<div
+								class="w-12 h-12 sm:w-14 sm:h-14 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 text-xl sm:text-2xl font-bold flex-shrink-0"
+							>
+								10+
+							</div>
+							<div>
+								<p
+									class="font-bold text-gray-900 text-sm sm:text-base leading-tight"
+								>
+									Years of
+								</p>
+								<p class="text-gray-500 text-xs sm:text-sm">Experience</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="w-full lg:w-1/2 mt-8 sm:mt-10 lg:mt-0 pt-6 sm:pt-0">
+						<h2
+							class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2"
+						>
+							About GreenScape
+						</h2>
+						<h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+							Breathing Life Into Your Outdoor Spaces
+						</h3>
+						<p class="text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">
+							At GreenScape, we believe your lawn is an extension of your home.
+							Founded on a passion for nature and meticulous attention to
+							detail, our local team is dedicated to transforming and
+							maintaining beautiful landscapes. We pride ourselves on turning
+							ordinary yards into extraordinary outdoor sanctuaries.
+						</p>
+
+						<ul class="space-y-4 mb-10">
+							<li class="flex items-start">
+								<span
+									class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mt-0.5 mr-4"
+								>
+									<i class="fa-solid fa-check text-xs"></i>
+								</span>
+								<div>
+									<h5 class="font-bold text-gray-900">Professional Service</h5>
+									<p class="text-gray-600 text-sm mt-1">
+										Fully licensed and insured experts using commercial-grade
+										equipment.
+									</p>
+								</div>
+							</li>
+							<li class="flex items-start">
+								<span
+									class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mt-0.5 mr-4"
+								>
+									<i class="fa-solid fa-check text-xs"></i>
+								</span>
+								<div>
+									<h5 class="font-bold text-gray-900">Affordable Pricing</h5>
+									<p class="text-gray-600 text-sm mt-1">
+										Transparent quotes with no hidden fees. High quality at fair
+										rates.
+									</p>
+								</div>
+							</li>
+							<li class="flex items-start">
+								<span
+									class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mt-0.5 mr-4"
+								>
+									<i class="fa-solid fa-check text-xs"></i>
+								</span>
+								<div>
+									<h5 class="font-bold text-gray-900">Reliable Team</h5>
+									<p class="text-gray-600 text-sm mt-1">
+										We show up on time, every time, rain or shine.
+									</p>
+								</div>
+							</li>
+						</ul>
+
+						<a
+							href="#about"
+							class="inline-flex items-center text-brand-600 font-bold hover:text-brand-700 transition"
+						>
+							Learn more about our story
+							<i class="fa-solid fa-arrow-right ml-2"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section
+			class="py-16 lg:py-20 bg-brand-900 text-white relative overflow-hidden"
+		>
+			<div
+				class="absolute inset-0 opacity-10"
+				style="
+					background-image: radial-gradient(#22c55e 2px, transparent 2px);
+					background-size: 30px 30px;
+				"
+			></div>
+
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+				<div class="text-center mb-10 sm:mb-12">
+					<h2
+						class="text-brand-400 font-bold tracking-wide uppercase text-sm mb-2"
+					>
+						The GreenScape Advantage
+					</h2>
+					<h3 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Us?</h3>
+				</div>
+
+				<div
+					class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center"
+				>
+					<div class="p-4 sm:p-6">
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-500/30"
+						>
+							<i
+								class="fa-solid fa-bolt text-brand-400 text-xl sm:text-2xl"
+							></i>
+						</div>
+						<h4 class="text-lg sm:text-xl font-bold mb-2">Fast Response</h4>
+						<p class="text-gray-300 text-xs sm:text-sm px-2 sm:px-0">
+							Quick quotes and prompt scheduling to meet your timelines.
+						</p>
+					</div>
+
+					<div class="p-4 sm:p-6">
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-500/30"
+						>
+							<i
+								class="fa-solid fa-user-tie text-brand-400 text-xl sm:text-2xl"
+							></i>
+						</div>
+						<h4 class="text-lg sm:text-xl font-bold mb-2">Experienced Team</h4>
+						<p class="text-gray-300 text-xs sm:text-sm px-2 sm:px-0">
+							Vetted, trained, and passionate gardening professionals.
+						</p>
+					</div>
+
+					<div class="p-4 sm:p-6">
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-500/30"
+						>
+							<i
+								class="fa-solid fa-piggy-bank text-brand-400 text-xl sm:text-2xl"
+							></i>
+						</div>
+						<h4 class="text-lg sm:text-xl font-bold mb-2">
+							Affordable Pricing
+						</h4>
+						<p class="text-gray-300 text-xs sm:text-sm px-2 sm:px-0">
+							Competitive rates tailored to your specific budget and needs.
+						</p>
+					</div>
+
+					<div class="p-4 sm:p-6">
+						<div
+							class="w-14 h-14 sm:w-16 sm:h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-500/30"
+						>
+							<i
+								class="fa-solid fa-star text-brand-400 text-xl sm:text-2xl"
+							></i>
+						</div>
+						<h4 class="text-lg sm:text-xl font-bold mb-2">Quality Service</h4>
+						<p class="text-gray-300 text-xs sm:text-sm px-2 sm:px-0">
+							100% satisfaction guarantee on all our landscaping work.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="py-16 lg:py-24 bg-gray-50">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+					<h2
+						class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2"
+					>
+						Reviews
+					</h2>
+					<h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+						Happy Customers
+					</h3>
+					<div class="w-24 h-1 bg-brand-600 mx-auto rounded-full"></div>
+				</div>
+
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+				>
+					<div
+						class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 relative"
+					>
+						<i
+							class="fa-solid fa-quote-right absolute top-6 right-6 text-3xl sm:text-4xl text-brand-50"
+						></i>
+						<div class="flex text-yellow-400 mb-4 text-xs sm:text-sm">
+							<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star"></i>
+						</div>
+						<p class="text-gray-600 italic mb-6 text-sm sm:text-base">
+							"GreenScape transformed my overgrown yard into a beautiful garden.
+							Their team was polite, fast, and the pricing was exactly as
+							quoted. Highly recommended!"
+						</p>
+						<div class="flex items-center">
+							<div
+								class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 rounded-full overflow-hidden mr-4 flex-shrink-0"
+							>
+								<img
+									src="https://randomuser.me/api/portraits/women/44.jpg"
+									alt="Sarah J."
+									class="w-full h-full object-cover"
+								/>
+							</div>
+							<div>
+								<h5 class="font-bold text-gray-900 text-sm sm:text-base">
+									Sarah Jenkins
+								</h5>
+								<span class="text-xs text-gray-500">Homeowner</span>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 relative"
+					>
+						<i
+							class="fa-solid fa-quote-right absolute top-6 right-6 text-3xl sm:text-4xl text-brand-50"
+						></i>
+						<div class="flex text-yellow-400 mb-4 text-xs sm:text-sm">
+							<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star"></i>
+						</div>
+						<p class="text-gray-600 italic mb-6 text-sm sm:text-base">
+							"I've used several lawn care services over the years, but these
+							guys are the most reliable. They show up every Tuesday like
+							clockwork and do an immaculate job."
+						</p>
+						<div class="flex items-center">
+							<div
+								class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 rounded-full overflow-hidden mr-4 flex-shrink-0"
+							>
+								<img
+									src="https://randomuser.me/api/portraits/men/32.jpg"
+									alt="Michael T."
+									class="w-full h-full object-cover"
+								/>
+							</div>
+							<div>
+								<h5 class="font-bold text-gray-900 text-sm sm:text-base">
+									Michael Torres
+								</h5>
+								<span class="text-xs text-gray-500">Property Manager</span>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 relative"
+					>
+						<i
+							class="fa-solid fa-quote-right absolute top-6 right-6 text-3xl sm:text-4xl text-brand-50"
+						></i>
+						<div class="flex text-yellow-400 mb-4 text-xs sm:text-sm">
+							<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+							><i class="fa-solid fa-star-half-stroke"></i>
+						</div>
+						<p class="text-gray-600 italic mb-6 text-sm sm:text-base">
+							"Exceptional weed control and hedge trimming. They cleaned up
+							everything perfectly before leaving. My front lawn is finally the
+							envy of the neighborhood."
+						</p>
+						<div class="flex items-center">
+							<div
+								class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 rounded-full overflow-hidden mr-4 flex-shrink-0"
+							>
+								<img
+									src="https://randomuser.me/api/portraits/women/68.jpg"
+									alt="Emily R."
+									class="w-full h-full object-cover"
+								/>
+							</div>
+							<div>
+								<h5 class="font-bold text-gray-900 text-sm sm:text-base">
+									Emily Richards
+								</h5>
+								<span class="text-xs text-gray-500">Homeowner</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section
+			id="booking"
+			class="py-16 lg:py-24 bg-white relative overflow-hidden"
+		>
+			<div
+				class="absolute top-0 right-0 w-64 h-64 bg-brand-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 transform translate-x-1/2 -translate-y-1/2 hidden md:block"
+			></div>
+			<div
+				class="absolute bottom-0 left-0 w-80 h-80 bg-brand-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform -translate-x-1/2 translate-y-1/2 hidden md:block"
+			></div>
+
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+				<div class="text-center mb-10 sm:mb-12">
+					<h2
+						class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2"
+					>
+						Ready for a beautiful lawn?
+					</h2>
+					<h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+						Book a Service
+					</h3>
+					<p class="text-gray-600 text-sm sm:text-base px-2">
+						Fill out the form below and we'll get back to you to confirm your
+						appointment.
+					</p>
+				</div>
+
+				<div
+					class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 relative z-20"
+				>
+					<div class="p-6 sm:p-8 md:p-12">
+						<div
+							id="form-error"
+							class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm"
+						>
+							Please fill out all required fields correctly.
+						</div>
+
+						<div
+							id="form-success"
+							class="hidden bg-emerald-50 border border-emerald-200 p-8 rounded-2xl text-center mb-0"
+						>
+							<div
+								class="w-16 h-16 bg-brand-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-3xl"
+							>
+								<i class="fa-solid fa-check"></i>
+							</div>
+							<h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+								Booking Requested!
+							</h4>
+							<p class="text-gray-600 mb-6 text-sm sm:text-base">
+								Thank you for choosing GreenScape. We have received your details
+								and will contact you shortly to confirm your appointment.
+							</p>
+							<button
+								type="button"
+								onclick="resetForm()"
+								class="w-full sm:w-auto bg-brand-600 text-white px-6 py-3 rounded-full font-medium hover:bg-brand-700 transition"
+							>
+								Book Another Service
+							</button>
+						</div>
+
+						<form id="booking-form" class="space-y-5 sm:space-y-6">
+							{% csrf_token %}
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+								<div>
+									<label
+										for="name"
+										class="block text-sm font-medium text-gray-700 mb-1.5"
+										>Full Name <span class="text-red-500">*</span></label
+									>
+									<input
+										type="text"
+										id="name"
+										name="name"
+										required
+										class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white text-sm sm:text-base"
+										placeholder="John Doe"
+									/>
+								</div>
+								<div>
+									<label
+										for="phone"
+										class="block text-sm font-medium text-gray-700 mb-1.5"
+										>Phone Number <span class="text-red-500">*</span></label
+									>
+									<input
+										type="tel"
+										id="phone"
+										name="phone"
+										required
+										class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white text-sm sm:text-base"
+										placeholder="(555) 123-4567"
+									/>
+								</div>
+							</div>
+
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+								<div>
+									<label
+										for="email"
+										class="block text-sm font-medium text-gray-700 mb-1.5"
+										>Email Address</label
+									>
+									<input
+										type="email"
+										id="email"
+										name="email"
+										class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white text-sm sm:text-base"
+										placeholder="john@example.com"
+									/>
+								</div>
+								<div>
+									<label
+										for="date"
+										class="block text-sm font-medium text-gray-700 mb-1.5"
+										>Preferred Date <span class="text-red-500">*</span></label
+									>
+									<input
+										type="date"
+										id="date"
+										name="date"
+										required
+										class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white text-gray-600 text-sm sm:text-base"
+									/>
+								</div>
+							</div>
+
+							<div>
+								<label
+									for="address"
+									class="block text-sm font-medium text-gray-700 mb-1.5"
+									>Service Address <span class="text-red-500">*</span></label
+								>
+								<input
+									type="text"
+									id="address"
+									name="address"
+									required
+									class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white text-sm sm:text-base"
+									placeholder="123 Main St, Aukland,New Zealand"
+								/>
+							</div>
+
+							<div>
+								<label
+									for="service"
+									class="block text-sm font-medium text-gray-700 mb-1.5"
+									>Select Service <span class="text-red-500">*</span></label
+								>
+								<div class="relative">
+									<select
+										id="service"
+										name="service"
+										required
+										class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white appearance-none text-gray-600 text-sm sm:text-base"
+									>
+										<option value="" disabled selected>
+											Choose a service...
+										</option>
+										<option value="lawn-mowing">Lawn Mowing</option>
+										<option value="garden-maintenance">
+											Garden Maintenance
+										</option>
+										<option value="hedge-trimming">Hedge Trimming</option>
+										<option value="weed-control">Weed Control</option>
+										<option value="waste-removal">Waste Removal</option>
+										<option value="custom-landscaping">
+											Custom Landscaping / Other
+										</option>
+									</select>
+									<div
+										class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500"
+									>
+										<i class="fa-solid fa-chevron-down text-sm"></i>
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<label
+									for="message"
+									class="block text-sm font-medium text-gray-700 mb-1.5"
+									>Additional Details (Optional)</label
+								>
+								<textarea
+									id="message"
+									name="message"
+									rows="4"
+									class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-shadow bg-gray-50 focus:bg-white resize-none text-sm sm:text-base"
+									placeholder="Tell us about the size of your yard or specific requirements..."
+								></textarea>
+							</div>
+
+							<div class="pt-4 text-center">
+								<button
+									type="submit"
+									class="w-full sm:w-auto md:px-12 py-3.5 sm:py-4 bg-brand-600 text-white font-bold rounded-full hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all transform hover:-translate-y-1 shadow-lg text-base sm:text-lg"
+								>
+									Book Now
+								</button>
+								<p class="text-xs text-gray-500 mt-4">
+									<i class="fa-solid fa-lock mr-1"></i> Your information is
+									secure and will never be shared.
+								</p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section
+			id="contact"
+			class="py-16 lg:py-24 bg-gray-50 border-t border-gray-100"
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div
+					class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center"
+				>
+					<div>
+						<h2
+							class="text-brand-600 font-bold tracking-wide uppercase text-sm mb-2 text-center lg:text-left"
+						>
+							Get In Touch
+						</h2>
+						<h3
+							class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center lg:text-left"
+						>
+							Contact Information
+						</h3>
+						<p
+							class="text-gray-600 mb-8 leading-relaxed text-sm sm:text-base text-center lg:text-left px-2 sm:px-0"
+						>
+							Have a question about our services or need a quick quote? Reach
+							out to us via phone, email, or chat with us instantly on WhatsApp.
+						</p>
+
+						<div class="space-y-6 max-w-sm mx-auto lg:mx-0">
+							<div class="flex items-start">
+								<div
+									class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-brand-600 shadow-sm border border-gray-100"
+								>
+									<i class="fa-solid fa-phone"></i>
+								</div>
+								<div class="ml-4 pt-1">
+									<h4
+										class="text-xs sm:text-sm font-bold text-gray-900 uppercase"
+									>
+										Call Us
+									</h4>
+									<a
+										href="tel:+919316040627"
+										class="text-base sm:text-lg text-gray-600 hover:text-brand-600 transition"
+										>+91 93160 40627</a
+									>
+								</div>
+							</div>
+
+							<div class="flex items-start">
+								<div
+									class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-brand-600 shadow-sm border border-gray-100"
+								>
+									<i class="fa-solid fa-envelope"></i>
+								</div>
+								<div class="ml-4 pt-1">
+									<h4
+										class="text-xs sm:text-sm font-bold text-gray-900 uppercase"
+									>
+										Email Us
+									</h4>
+									<a
+										href="mailto:harshkadikar@gmail.com"
+										class="text-base sm:text-lg text-gray-600 hover:text-brand-600 transition break-all"
+										>harshkadikar@gmail.com</a
+									>
+								</div>
+							</div>
+
+							<div class="flex items-start">
+								<div
+									class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-brand-600 shadow-sm border border-gray-100"
+								>
+									<i class="fa-solid fa-location-dot"></i>
+								</div>
+								<div class="ml-4 pt-1">
+									<h4
+										class="text-xs sm:text-sm font-bold text-gray-900 uppercase"
+									>
+										Service Area
+									</h4>
+									<p class="text-base sm:text-lg text-gray-600">
+										Portland Metropolitan Area & Suburbs
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="mt-8 sm:mt-10 text-center lg:text-left">
+							<a
+								href="https://wa.me/919316040627"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 border border-transparent text-sm sm:text-base font-bold rounded-full text-white bg-[#25D366] hover:bg-[#1ebd5a] shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1"
+							>
+								<i class="fa-brands fa-whatsapp text-xl sm:text-2xl mr-2"></i>
+								Message on WhatsApp
+							</a>
+						</div>
+					</div>
+
+					<div
+						class="bg-brand-900 rounded-3xl p-6 sm:p-8 md:p-12 text-white shadow-xl mt-8 lg:mt-0"
+					>
+						<h3 class="text-xl sm:text-2xl font-bold mb-6 flex items-center">
+							<i class="fa-regular fa-clock mr-3 text-brand-400"></i> Business
+							Hours
+						</h3>
+
+						<ul
+							class="space-y-3 sm:space-y-4 text-gray-300 text-sm sm:text-base"
+						>
+							<li
+								class="flex flex-col sm:flex-row justify-between border-b border-gray-700 pb-2"
+							>
+								<span class="mb-1 sm:mb-0">Monday - Friday</span>
+								<span class="font-medium text-white">7:00 AM - 6:00 PM</span>
+							</li>
+							<li
+								class="flex flex-col sm:flex-row justify-between border-b border-gray-700 pb-2"
+							>
+								<span class="mb-1 sm:mb-0">Saturday</span>
+								<span class="font-medium text-white">8:00 AM - 4:00 PM</span>
+							</li>
+							<li class="flex flex-col sm:flex-row justify-between pb-2">
+								<span class="mb-1 sm:mb-0">Sunday</span>
+								<span class="font-medium text-brand-400"
+									>Closed (Emergency Only)</span
+								>
+							</li>
+						</ul>
+
+						<div
+							class="mt-8 sm:mt-10 bg-brand-800/50 rounded-xl p-5 sm:p-6 border border-brand-700"
+						>
+							<h4 class="font-bold text-white mb-2 text-sm sm:text-base">
+								Emergency Tree/Yard Service?
+							</h4>
+							<p class="text-xs sm:text-sm text-gray-300 mb-4">
+								We offer 24/7 emergency response for fallen trees and storm
+								damage.
+							</p>
+							<a
+								href="tel:+919316040627"
+								class="text-brand-400 font-bold hover:text-white transition flex items-center text-sm sm:text-base"
+							>
+								Call Emergency Line <i class="fa-solid fa-arrow-right ml-2"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer class="bg-gray-900 text-white pt-16 pb-8">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div
+					class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 mb-12"
+				>
+					<div class="col-span-1 sm:col-span-2 lg:col-span-1">
+						<div class="flex items-center mb-4">
+							<i class="fa-solid fa-leaf text-brand-500 text-2xl mr-2"></i>
+							<span class="font-bold text-xl tracking-tight"
+								>Green<span class="text-brand-500">Scape</span></span
+							>
+						</div>
+						<p class="text-gray-400 text-sm mb-6 max-w-sm">
+							Providing top-tier lawn care, landscaping, and gardening services
+							to keep your property vibrant all year round.
+						</p>
+						<div class="flex space-x-4">
+							<a
+								href="#"
+								class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-brand-600 hover:text-white transition"
+							>
+								<i class="fa-brands fa-facebook-f"></i>
+							</a>
+							<a
+								href="#"
+								class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-brand-600 hover:text-white transition"
+							>
+								<i class="fa-brands fa-instagram"></i>
+							</a>
+							<a
+								href="#"
+								class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-brand-600 hover:text-white transition"
+							>
+								<i class="fa-brands fa-twitter"></i>
+							</a>
+						</div>
+					</div>
+
+					<div>
+						<h4 class="font-bold text-lg mb-4">Quick Links</h4>
+						<ul class="space-y-2 text-sm text-gray-400">
+							<li>
+								<a href="#home" class="hover:text-brand-500 transition">Home</a>
+							</li>
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Our Services</a
+								>
+							</li>
+							<li>
+								<a href="#about" class="hover:text-brand-500 transition"
+									>About Us</a
+								>
+							</li>
+							<li>
+								<a href="#testimonials" class="hover:text-brand-500 transition"
+									>Testimonials</a
+								>
+							</li>
+							<li>
+								<a href="#contact" class="hover:text-brand-500 transition"
+									>Contact Us</a
+								>
+							</li>
+						</ul>
+					</div>
+
+					<div>
+						<h4 class="font-bold text-lg mb-4">Services</h4>
+						<ul class="space-y-2 text-sm text-gray-400">
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Lawn Mowing</a
+								>
+							</li>
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Garden Maintenance</a
+								>
+							</li>
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Hedge Trimming</a
+								>
+							</li>
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Weed Control</a
+								>
+							</li>
+							<li>
+								<a href="#services" class="hover:text-brand-500 transition"
+									>Waste Removal</a
+								>
+							</li>
+						</ul>
+					</div>
+
+					<div class="col-span-1 sm:col-span-2 lg:col-span-1">
+						<h4 class="font-bold text-lg mb-4">Lawn Care Tips</h4>
+						<p class="text-sm text-gray-400 mb-4">
+							Subscribe to get seasonal gardening tips right to your inbox.
+						</p>
+						<form
+							class="flex"
+							onsubmit="
+								event.preventDefault();
+								alert('Subscribed to newsletter!');
+							"
+						>
+							<input
+								type="email"
+								placeholder="Your email"
+								required
+								class="w-full px-4 py-2 bg-gray-800 border-none rounded-l-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white text-sm"
+							/>
+							<button
+								type="submit"
+								class="bg-brand-600 hover:bg-brand-700 px-4 py-2 rounded-r-lg transition"
+							>
+								<i class="fa-solid fa-paper-plane"></i>
+							</button>
+						</form>
+					</div>
+				</div>
+
+				<div
+					class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 text-center md:text-left gap-4 md:gap-0"
+				>
+					<p>
+						&copy; <span id="year"></span> GreenScape Lawn Care. All rights
+						reserved.
+					</p>
+					<div class="flex space-x-4">
+						<a href="#" class="hover:text-white transition">Privacy Policy</a>
+						<a href="#" class="hover:text-white transition">Terms of Service</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Set dynamic year in footer
+			document.getElementById('year').textContent = new Date().getFullYear();
+
+			// Navbar Scroll Effect
+			const navbar = document.getElementById('navbar');
+			window.addEventListener('scroll', () => {
+				if (window.scrollY > 20) {
+					navbar.classList.add('shadow-md');
+					navbar.classList.remove('py-2');
+				} else {
+					navbar.classList.remove('shadow-md');
+					navbar.classList.add('py-2');
+				}
+			});
+
+			// Mobile Menu Toggle
+			const btn = document.getElementById('mobile-menu-btn');
+			const menu = document.getElementById('mobile-menu');
+			const icon = btn.querySelector('i');
+
+			btn.addEventListener('click', () => {
+				menu.classList.toggle('hidden');
+				if (menu.classList.contains('hidden')) {
+					icon.classList.remove('fa-xmark');
+					icon.classList.add('fa-bars');
+				} else {
+					icon.classList.remove('fa-bars');
+					icon.classList.add('fa-xmark');
+				}
+			});
+
+			// Close mobile menu when a link is clicked
+			const mobileLinks = menu.querySelectorAll('a');
+			mobileLinks.forEach((link) => {
+				link.addEventListener('click', () => {
+					menu.classList.add('hidden');
+					icon.classList.remove('fa-xmark');
+					icon.classList.add('fa-bars');
+				});
+			});
+
+			// --- DJANGO CSRF TOKEN HELPER ---
+			function getCookie(name) {
+				let cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+					const cookies = document.cookie.split(';');
+					for (let i = 0; i < cookies.length; i++) {
+						const cookie = cookies[i].trim();
+						if (cookie.substring(0, name.length + 1) === name + '=') {
+							cookieValue = decodeURIComponent(
+								cookie.substring(name.length + 1),
+							);
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			// --- FORM SUBMISSION ---
+			const bookingForm = document.getElementById('booking-form');
+			const formError = document.getElementById('form-error');
+			const formSuccess = document.getElementById('form-success');
+
+			bookingForm.addEventListener('submit', function (e) {
+				e.preventDefault();
+
+				const name = document.getElementById('name').value.trim();
+				const phone = document.getElementById('phone').value.trim();
+				const email = document.getElementById('email').value.trim();
+				// 1. Get the address value
+				const address = document.getElementById('address').value.trim();
+				const date = document.getElementById('date').value;
+				const service = document.getElementById('service').value;
+				const message = document.getElementById('message').value;
+
+				// 2. Add address to validation check
+				if (!name || !phone || !address || !date || !service) {
+					formError.classList.remove('hidden');
+					return;
+				}
+
+				formError.classList.add('hidden');
+
+				const submitBtn = bookingForm.querySelector('button[type="submit"]');
+				const originalBtnText = submitBtn.innerHTML;
+				submitBtn.innerHTML =
+					'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
+				submitBtn.disabled = true;
+
+				// Send data to Django Backend
+				fetch('/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-CSRFToken': getCookie('csrftoken'), // Include CSRF Token
+					},
+					body: JSON.stringify({
+						Name: name,
+						Phone: phone,
+						Email: email,
+						Address: address, // 3. Send address in payload
+						Date: date,
+						Service: service,
+						Message: message,
+					}),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.status === 'success') {
+							bookingForm.classList.add('hidden');
+							formSuccess.classList.remove('hidden');
+							formSuccess.scrollIntoView({
+								behavior: 'smooth',
+								block: 'center',
+							});
+						} else {
+							throw new Error(data.message);
+						}
+					})
+					.catch((error) => {
+						console.error(error);
+						formError.textContent =
+							'Oops! There was a problem submitting your form. Please try again.';
+						formError.classList.remove('hidden');
+					})
+					.finally(() => {
+						submitBtn.innerHTML = originalBtnText;
+						submitBtn.disabled = false;
+					});
+			});
+			// --- ABOUT SECTION IMAGE SLIDER ---
+			const sliderImages = document.querySelectorAll('.slider-img');
+			let currentImgIndex = 0;
+
+			if (sliderImages.length > 0) {
+				// Change the image every 4 seconds (4000 milliseconds)
+				setInterval(() => {
+					// Fade out the current image
+					sliderImages[currentImgIndex].classList.remove('opacity-100');
+					sliderImages[currentImgIndex].classList.add('opacity-0');
+
+					// Calculate the next image index
+					currentImgIndex = (currentImgIndex + 1) % sliderImages.length;
+
+					// Fade in the new image
+					sliderImages[currentImgIndex].classList.remove('opacity-0');
+					sliderImages[currentImgIndex].classList.add('opacity-100');
+				}, 4000);
+			}
+			function resetForm() {
+				bookingForm.reset();
+				formSuccess.classList.add('hidden');
+				bookingForm.classList.remove('hidden');
+			}
+		</script>
+	</body>
+</html>
