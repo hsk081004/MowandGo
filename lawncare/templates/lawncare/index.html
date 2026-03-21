@@ -1275,14 +1275,13 @@
 				const name = document.getElementById('name').value.trim();
 				const phone = document.getElementById('phone').value.trim();
 				const email = document.getElementById('email').value.trim();
-				// 1. Get the address value
 				const address = document.getElementById('address').value.trim();
 				const date = document.getElementById('date').value;
 				const service = document.getElementById('service').value;
 				const message = document.getElementById('message').value;
 
-				// 2. Add address to validation check
 				if (!name || !phone || !address || !date || !service) {
+					formError.textContent = 'Please fill in all required fields.';
 					formError.classList.remove('hidden');
 					return;
 				}
@@ -1292,27 +1291,33 @@
 				const submitBtn = bookingForm.querySelector('button[type="submit"]');
 				const originalBtnText = submitBtn.innerHTML;
 				submitBtn.innerHTML =
-					'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
+					'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending Request...';
 				submitBtn.disabled = true;
 
-				// Send data to Django Backend
+				// Send data to Django Backend (using relative path '/')
 				fetch('/', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						'X-CSRFToken': getCookie('csrftoken'), // Include CSRF Token
+						'X-CSRFToken': getCookie('csrftoken'),
 					},
 					body: JSON.stringify({
 						Name: name,
 						Phone: phone,
 						Email: email,
-						Address: address, // 3. Send address in payload
+						Address: address,
 						Date: date,
 						Service: service,
 						Message: message,
 					}),
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						const data = await response.json();
+						if (!response.ok) {
+							throw new Error(data.message || 'Server error');
+						}
+						return data;
+					})
 					.then((data) => {
 						if (data.status === 'success') {
 							bookingForm.classList.add('hidden');
@@ -1321,14 +1326,11 @@
 								behavior: 'smooth',
 								block: 'center',
 							});
-						} else {
-							throw new Error(data.message);
 						}
 					})
 					.catch((error) => {
-						console.error(error);
-						formError.textContent =
-							'Oops! There was a problem submitting your form. Please try again.';
+						console.error('Submission Error:', error);
+						formError.textContent = 'Error: ' + error.message;
 						formError.classList.remove('hidden');
 					})
 					.finally(() => {
@@ -1336,25 +1338,25 @@
 						submitBtn.disabled = false;
 					});
 			});
+
 			// --- ABOUT SECTION IMAGE SLIDER ---
 			const sliderImages = document.querySelectorAll('.slider-img');
 			let currentImgIndex = 0;
 
 			if (sliderImages.length > 0) {
-				// Change the image every 4 seconds (4000 milliseconds)
 				setInterval(() => {
-					// Fade out the current image
-					sliderImages[currentImgIndex].classList.remove('opacity-100');
-					sliderImages[currentImgIndex].classList.add('opacity-0');
-
-					// Calculate the next image index
+					sliderImages[currentImgIndex].classList.replace(
+						'opacity-100',
+						'opacity-0',
+					);
 					currentImgIndex = (currentImgIndex + 1) % sliderImages.length;
-
-					// Fade in the new image
-					sliderImages[currentImgIndex].classList.remove('opacity-0');
-					sliderImages[currentImgIndex].classList.add('opacity-100');
+					sliderImages[currentImgIndex].classList.replace(
+						'opacity-0',
+						'opacity-100',
+					);
 				}, 4000);
 			}
+
 			function resetForm() {
 				bookingForm.reset();
 				formSuccess.classList.add('hidden');
