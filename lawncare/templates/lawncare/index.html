@@ -1294,13 +1294,11 @@
 					'<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending Request...';
 				submitBtn.disabled = true;
 
-				// Send data to Django Backend (using relative path '/')
 				// Send data to Django Backend
-				fetch('/', {
+				fetch(window.location.origin + '/', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						// This line is the most important!
 						'X-CSRFToken': getCookie('csrftoken'),
 					},
 					body: JSON.stringify({
