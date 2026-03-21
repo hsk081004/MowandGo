@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from .models import Booking
 
 
@@ -13,27 +14,43 @@ def home_view(request):
     return render(request, 'lawncare/index.html')
 
 
-# ✅ API FOR BOOKING (ONLY JSON)
+# ✅ API FOR BOOKING (STRICT JSON API)
 @csrf_exempt
+@require_POST
 def booking_api(request):
-    if request.method == 'POST':
+    try:
+        # ✅ Parse JSON safely
         try:
             data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Invalid JSON data'
+            }, status=400)
 
-            # Save to Database
-            booking = Booking.objects.create(
-                name=data.get('Name'),
-                phone=data.get('Phone'),
-                email=data.get('Email'),
-                address=data.get('Address'),
-                service=data.get('Service'),
-                preferred_date=data.get('Date'),
-                message=data.get('Message')
-            )
+        # ✅ Validate required fields
+        required_fields = ['Name', 'Phone', 'Address', 'Date', 'Service']
+        for field in required_fields:
+            if not data.get(field):
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f'{field} is required'
+                }, status=400)
 
-            # Email
-            subject = f"Mow & Go | New Booking from {booking.name}"
-            email_body = f"""
+        # ✅ Save to Database
+        booking = Booking.objects.create(
+            name=data.get('Name'),
+            phone=data.get('Phone'),
+            email=data.get('Email'),
+            address=data.get('Address'),
+            service=data.get('Service'),
+            preferred_date=data.get('Date'),
+            message=data.get('Message')
+        )
+
+        # ✅ Email Content
+        subject = f"Mow & Go | New Booking from {booking.name}"
+        email_body = f"""
 =========================================
 🌿 MOW & GO - NEW BOOKING REQUEST 🌿
 =========================================
@@ -49,38 +66,38 @@ Message:
 {booking.message if booking.message else "No message provided."}
 
 Dashboard:
-https://mowandgo-4hxy.onrender.com/dashboard/
+https://mowandgo.onrender.com/dashboard/
+
 =========================================
 """
 
-            try:
-                send_mail(
-                    subject,
-                    email_body,
-                    settings.EMAIL_HOST_USER,
-                    [settings.EMAIL_HOST_USER],
-                    fail_silently=False,
-                )
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Booking saved and email sent!'
-                })
+        # ✅ Try sending email (non-blocking logic)
+        email_status = "sent"
+        try:
+            send_mail(
+                subject,
+                email_body,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+        except Exception as email_error:
+            print("EMAIL ERROR:", email_error)
+            email_status = "failed"
 
-            except Exception as email_error:
-                print("EMAIL ERROR:", email_error)
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Booking saved (email pending)'
-                })
+        # ✅ ALWAYS return clean JSON
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Booking saved successfully',
+            'email_status': email_status
+        })
 
-        except Exception as e:
-            print("GENERAL ERROR:", e)
-            return JsonResponse({
-                'status': 'error',
-                'message': str(e)
-            }, status=400)
-
-    return JsonResponse({'message': 'Invalid request'}, status=405)
+    except Exception as e:
+        print("GENERAL ERROR:", e)
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Something went wrong on server'
+        }, status=500)
 
 
 # --- CUSTOM ADMIN DASHBOARD ---
