@@ -5,7 +5,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 from .models import Booking
 
 
@@ -14,7 +13,7 @@ def home_view(request):
     return render(request, 'lawncare/index.html')
 
 
-# ✅ API FOR BOOKING (STRICT JSON API)
+# ✅ API FOR BOOKING (ONLY JSON)
 @csrf_exempt
 @require_POST
 def booking_api(request):
@@ -66,16 +65,17 @@ Message: {booking.message}
         # ✅ SAFE EMAIL BLOCK (VERY IMPORTANT)
         email_status = "sent"
         try:
-            send_mail(
-                subject,
-                email_body,
-                settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER],
-                fail_silently=True,   # 🔥 FIX HERE
-            )
-        except Exception as email_error:
-            print("EMAIL ERROR:", email_error)
-            email_status = "failed"
+    send_mail(
+        subject,
+        email_body,
+        settings.EMAIL_HOST_USER,
+        [settings.EMAIL_HOST_USER],
+        fail_silently=False,   # 👈 TEMPORARY (to see error)
+    )
+    print("✅ EMAIL SENT SUCCESSFULLY")
+
+except Exception as email_error:
+    print("❌ EMAIL ERROR:", email_error)
 
         # ✅ ALWAYS RETURN JSON (NO HTML EVER)
         return JsonResponse({
@@ -91,6 +91,8 @@ Message: {booking.message}
             'status': 'error',
             'message': str(e)   # show real error for debugging
         }, status=500)
+
+    return JsonResponse({'message': 'Invalid request'}, status=405)
 
 
 # --- CUSTOM ADMIN DASHBOARD ---
