@@ -1,6 +1,5 @@
 """
 Django settings for core project.
-
 Production ready configuration for Render deployment.
 """
 
@@ -41,6 +40,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # =========================
 
 INSTALLED_APPS = [
+    'jazzmin', # MUST BE FIRST for the custom admin UI!
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lawncare',
+    'anymail', # HTTP Email API
 ]
 
 
@@ -57,10 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # Static files support
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -142,11 +140,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # =========================
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -155,13 +150,10 @@ USE_TZ = True
 # =========================
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
@@ -173,18 +165,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # =========================
-# EMAIL CONFIGURATION
+# EMAIL CONFIGURATION (RESEND API)
 # =========================
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# 🟢 Route emails through the Anymail HTTP backend using Resend
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend" 
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+ANYMAIL = {
+    # Pulls your Resend key from Render's Environment Variables
+    "RESEND_API_KEY": os.getenv("RESEND_API_KEY"),
+}
 
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# 🟢 Resend allows you to use this testing address immediately. 
+# It will only send emails to the email address you used to sign up for Resend.
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "onboarding@resend.dev")
