@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mow & Go | Admin Login</title>
+
+		<!-- Google Fonts for modern typography -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<style>
+			:root {
+				--brand-green: #1ea54a;
+				--brand-dark: #131926;
+				--brand-border: #174327;
+				--bg-light: #f3f6f5;
+				--text-light: #6b7280;
+				--white: #ffffff;
+				--input-bg: #f8f9fa;
+				--hover-green: #1a9242;
+			}
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'Poppins', sans-serif;
+				background-color: var(--bg-light);
+				min-height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 20px;
+				/* Matches the dark green bar at the bottom of your image */
+				border-bottom: 8px solid var(--brand-border);
+			}
+
+			.login-container {
+				width: 100%;
+				max-width: 420px;
+				background: var(--white);
+				border-radius: 16px;
+				box-shadow: 0 10px 25px rgba(19, 25, 38, 0.05);
+				overflow: hidden;
+				position: relative;
+			}
+
+			/* Decorative top bar */
+			.login-container::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 5px;
+				background: var(--brand-green);
+			}
+
+			.login-header {
+				text-align: center;
+				padding: 40px 30px 20px;
+			}
+
+			.brand-logo {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 12px;
+			}
+
+			.brand-logo svg {
+				width: 42px;
+				height: 42px;
+			}
+
+			.brand-logo h1 {
+				font-size: 32px;
+				font-weight: 800;
+				color: var(--brand-dark);
+				letter-spacing: -0.5px;
+			}
+
+			.brand-logo h1 .text-green {
+				color: var(--brand-green);
+			}
+
+			.login-header p {
+				color: var(--text-light);
+				font-size: 14px;
+				font-weight: 500;
+			}
+
+			.login-form {
+				padding: 0 40px 40px;
+			}
+
+			.input-group {
+				margin-bottom: 20px;
+				position: relative;
+			}
+
+			.input-group label {
+				display: block;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--brand-dark);
+				margin-bottom: 8px;
+			}
+
+			.input-group input {
+				width: 100%;
+				padding: 14px 16px;
+				background: var(--input-bg);
+				border: 2px solid transparent;
+				border-radius: 10px;
+				font-size: 14px;
+				font-family: inherit;
+				color: var(--brand-dark);
+				transition: all 0.3s ease;
+			}
+
+			.input-group input::placeholder {
+				color: #adb5bd;
+			}
+
+			.input-group input:focus {
+				outline: none;
+				background: var(--white);
+				border-color: var(--brand-green);
+				box-shadow: 0 0 0 4px rgba(30, 165, 74, 0.12);
+			}
+
+			.submit-btn {
+				width: 100%;
+				padding: 15px;
+				background: var(--brand-green);
+				color: var(--white);
+				border: none;
+				border-radius: 10px;
+				font-size: 16px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				margin-top: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.submit-btn:hover {
+				background: var(--hover-green);
+				transform: translateY(-2px);
+				box-shadow: 0 6px 15px rgba(30, 165, 74, 0.25);
+			}
+
+			.submit-btn:active {
+				transform: translateY(0);
+			}
+
+			/* Responsive tweaks */
+			@media (max-width: 480px) {
+				.login-form,
+				.login-header {
+					padding-left: 25px;
+					padding-right: 25px;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="login-container">
+			<div class="login-header">
+				<div class="brand-logo">
+					<!-- Brand matched Leaf SVG -->
+					<svg
+						viewBox="0 0 100 100"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							fill-rule="evenodd"
+							clip-rule="evenodd"
+							d="M83.4 28.3C83.4 28.3 71.7 10.9 44.7 18.2C27.9 22.8 18.2 38.9 19.3 55.4C19.7 61 22.4 66.8 28.1 66.8C28.1 66.8 21.3 55.7 30.5 46.5C36.6 40.4 46.7 38.3 54.4 39.1C54.4 39.1 44.3 42 39.4 52.8C35.8 60.7 31.8 66.8 26.8 70.3C21.2 74.2 16.5 74.8 15.3 80.8C14.1 86.8 20.3 89.6 24.3 86.6C27.1 84.5 30.4 78.5 32.8 72.8C36.3 64.5 39.6 61 46.7 60.5C59.9 59.6 70.8 66.2 79.7 56.3C87.4 47.7 83.4 28.3 83.4 28.3Z"
+							fill="var(--brand-green)"
+						/>
+					</svg>
+					<h1>Mow <span class="text-green">&</span> Go</h1>
+				</div>
+				<p>Admin Dashboard Portal</p>
+			</div>
+
+			<div class="login-form">
+				<form method="post">
+					{% csrf_token %}
+
+					<div class="input-group">
+						<label for="username">Username</label>
+						<input
+							type="text"
+							id="username"
+							name="username"
+							placeholder="Enter your admin username"
+							required
+						/>
+					</div>
+
+					<div class="input-group">
+						<label for="password">Password</label>
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Enter your secure password"
+							required
+						/>
+					</div>
+
+					<button type="submit" class="submit-btn">
+						Secure Login
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
