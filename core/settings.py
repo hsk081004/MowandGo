@@ -6,6 +6,7 @@ Production ready configuration for Render deployment.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 # Load environment variables
 load_dotenv()
@@ -107,11 +108,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # DATABASE
 # =========================
 
+# This uses SQLite on your laptop, but uses Render's Postgres in production
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
 }
 
 
