@@ -1,20 +1,27 @@
-# Python cache files
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment (adjust the name if yours isn't called 'venv')
+# Virtual environments
 venv/
 env/
 
-# Database (Never upload your live database to GitHub!)
+# Database
 db.sqlite3
 
-# Environment variables / Secrets
+# Environment variables / secrets
 .env
 
-# Media files (user uploads)
+# Media uploads (user files)
 media/
 
-# Static files (CSS, JS, Images)
-static/
+# Static build files (optional)
+staticfiles/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python compiled files
+*.pyc
