@@ -35,6 +35,7 @@ def booking_api(request):
                     'message': f'{field} is required'
                 }, status=400)
 
+        # Save to Database
         booking = Booking.objects.create(
             name=data.get('Name'),
             phone=data.get('Phone'),
@@ -95,17 +96,18 @@ def booking_api(request):
         email_status = "sent"
 
         try:
+            # 🟢 UPDATED: Using Resend Sandbox logic
             email = EmailMessage(
                 subject,
                 email_body,
-                settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER]
+                settings.DEFAULT_FROM_EMAIL,    # From: onboarding@resend.dev (via Render env)
+                ['harshkadikar@gmail.com']       # To: Your Resend signup email
             )
 
             email.content_subtype = "html"
             email.send()
 
-            print("EMAIL SENT SUCCESSFULLY")
+            print("EMAIL SENT SUCCESSFULLY TO HARSH")
 
         except Exception as email_error:
             print("EMAIL ERROR:", email_error)
