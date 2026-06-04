@@ -1,15 +1,19 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 	<head>
+		<link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Mow & Go | Admin Login</title>
+		<title>Greenzo | Admin Login</title>
 
 		<!-- Google Fonts for modern typography -->
 		<link
 			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
 			rel="stylesheet"
 		/>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 		<style>
 			:root {
@@ -178,25 +182,16 @@
 
 	<body>
 		<div class="login-container">
-			<div class="login-header">
-				<div class="brand-logo">
-					<!-- Brand matched Leaf SVG -->
-					<svg
-						viewBox="0 0 100 100"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							fill-rule="evenodd"
-							clip-rule="evenodd"
-							d="M83.4 28.3C83.4 28.3 71.7 10.9 44.7 18.2C27.9 22.8 18.2 38.9 19.3 55.4C19.7 61 22.4 66.8 28.1 66.8C28.1 66.8 21.3 55.7 30.5 46.5C36.6 40.4 46.7 38.3 54.4 39.1C54.4 39.1 44.3 42 39.4 52.8C35.8 60.7 31.8 66.8 26.8 70.3C21.2 74.2 16.5 74.8 15.3 80.8C14.1 86.8 20.3 89.6 24.3 86.6C27.1 84.5 30.4 78.5 32.8 72.8C36.3 64.5 39.6 61 46.7 60.5C59.9 59.6 70.8 66.2 79.7 56.3C87.4 47.7 83.4 28.3 83.4 28.3Z"
-							fill="var(--brand-green)"
-						/>
-					</svg>
-					<h1>Mow <span class="text-green">&</span> Go</h1>
-				</div>
-				<p>Admin Dashboard Portal</p>
-			</div>
+			<div class="login-header text-center mb-6">
+    <a href="{% url 'home' %}" class="brand-logo" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        
+        <i class="fa-solid fa-leaf" style="color: #16a34a !important; font-size: 2.5rem !important;"></i>
+        
+        <h1 style="font-size: 2.5rem !important; font-weight: 800 !important; color: #111827 !important; margin: 0 !important; line-height: 1 !important; letter-spacing: -0.025em;">Greenzo</h1>
+        
+    </a>
+    <p class="text-gray-500 text-lg mt-3" style="margin-top: 10px;">Admin Dashboard Portal</p>
+</div>
 
 			<div class="login-form">
 				<form method="post">

@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-temp-key")
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".onrender.com",
@@ -171,13 +171,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # =========================
 
 # 🟢 Route emails through the Anymail HTTP backend using Resend
-EMAIL_BACKEND = "anymail.backends.resend.EmailBackend" 
+# EMAIL_BACKEND = "anymail.backends.resend.EmailBackend" 
 
-ANYMAIL = {
-    # Pulls your Resend key from Render's Environment Variables
-    "RESEND_API_KEY": os.getenv("RESEND_API_KEY"),
-}
-
-# 🟢 Resend allows you to use this testing address immediately. 
-# It will only send emails to the email address you used to sign up for Resend.
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "onboarding@resend.dev")
+# ANYMAIL = {
+#     # Pulls your Resend key from Render's Environment Variables
+#     "RESEND_API_KEY": os.getenv("RESEND_API_KEY"),
+# }
+# # settings.py
+# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "onboarding@resend.dev")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Greenzo Lawn Care <harshkadikar@gmail.com>'
+# =========================
+# LOGIN / LOGOUT REDIRECTS
+# =========================
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'login'

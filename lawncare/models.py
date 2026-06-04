@@ -11,6 +11,13 @@ class Booking(models.Model):
         ('custom-landscaping', 'Custom Landscaping / Other'),
     ]
 
+    # New Status choices for your Approve/Reject workflow
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ]
+
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField(blank=True, null=True)
@@ -23,6 +30,13 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     next_service_date = models.DateField(blank=True, null=True, help_text="For future CRM reminders")
     is_completed = models.BooleanField(default=False)
+    
+    # The brain of your new workflow
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='Pending'
+    )
 
     def __str__(self):
-        return f"{self.name} - {self.get_service_display()} on {self.preferred_date}"
+        return f"{self.name} - {self.get_service_display()} ({self.status})"
