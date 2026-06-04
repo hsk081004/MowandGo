@@ -108,12 +108,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # DATABASE
 # =========================
 
-# This uses SQLite on your laptop, but uses Render's Postgres in production
+# Temporary: Hardcoded to use SQLite to bypass Render PostgreSQL errors.
+# WARNING: All database data will be erased every time you deploy to Render!
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
